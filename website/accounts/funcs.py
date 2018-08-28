@@ -10,7 +10,7 @@ def generator(size=12, chars=string.ascii_letters+string.digits):
 
 
 class CountException(Exception):
-    """Хапрашивается аккаунтов больше, чем есть в наличии"""
+    """Запрашивается аккаунтов больше, чем есть в наличии."""
 
 
 def history(rows=10):
