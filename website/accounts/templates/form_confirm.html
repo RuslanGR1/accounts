@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    {% if order %}
+        <div class="col-md-6">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Товар</th>
+                        <td>{{ order.type.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Кол-во</th>
+                        <td>{{ order.count }}</td>
+                    </tr>
+                    <tr>
+                        <th>К оплате</th>
+                        <td>{{ order.total_price }}р.</td>
+                    </tr>
+                    <tr>
+                        <th>Кошелек</th>
+                        <td>{{ number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Примечание</th>
+                        <td>{{ order.pay_comment }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% if not order.paid %}
+            <a href="{{ qiwi_link }}" target="_blank">Оплатить</a>
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" value="Проверить" class="btn btn-primary">
+            </form>
+            {% endif %}
+
+            {% if order.paid %}
+                <p>Good</p>
+                <a href="{% url 'accounts:txt_download' order.type.name order.download_code %}">Ссылка для скачивания.</a>
+            {% else %}
+                <p>Not Good</p>
+            {% endif %}
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
