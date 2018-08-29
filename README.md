@@ -23,6 +23,8 @@ $ python manage.py runserver
 
 ### Settings update:
 > Add your qiwi phone number and qiwi api token (permission to view payment history)
+
+../website/website/settings.py
 ```
 base_num = ''
 
