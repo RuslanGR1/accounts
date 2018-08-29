@@ -1,5 +1,6 @@
 import random
 import string
+from collections import namedtuple
 
 from django.shortcuts import (
     render,
@@ -11,19 +12,23 @@ from django.contrib import messages
 from django.http import HttpResponse, Http404
 from django.db import transaction, IntegrityError
 
-from .models import AccountType, Order, Account
+from .models import AccountType, Order, Account, Group
 from .forms import OrderForm
 from .funcs import generator, CountException, check_status
 from website import settings
 
 
 def main(request):
-    types = AccountType.objects.all()
-    return render(request, 'main.html', {'accounts': types})
+    groups = Group.objects.all()
+    s = namedtuple('Section', 'title accounts')
+    groups_s = [s(g.title, AccountType.objects.filter(group=g)) for g in groups]
+
+    return render(request, 'main_1.html', {'groups': groups_s})
 
 
 def base_form(request, type_):
     form = OrderForm(request.POST or None)
+
     try:
         del request.session['id']
     except KeyError:
@@ -54,6 +59,7 @@ def form_confirm(request, type_, code):
     order = get_object_or_404(Order, pk=request.session.get('id', None))
 
     if request.POST:
+        # TODO: Delete after, temp check
         if check_status(order):  # Проверка оплаты
             order.paid = True
             order.download_code = generator(size=20)
@@ -98,14 +104,3 @@ def txt_download(request, type_, d_link):
         return response
     else:
         raise Http404('Неверный адрес или недостаточно аккаунтов')
-
-
-# TODO: Удалить представление после отладки
-# def add(request):
-#     types = ['Bitcointalk', 'Gmail', 'vk', 'test']
-#     for i in range(10):
-#         a = Account(type=AccountType.objects.get(name=random.choice(types)),
-#                     login=generator(size=8) + '@gmail.com',
-#                     password=generator(size=12))
-#         a.save()
-#     return redirect(reverse('accounts:main', args=[]))
