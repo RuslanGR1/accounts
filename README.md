@@ -1,7 +1,7 @@
 # accounts
 
 ## Quickstart:
-
+```
 $ mkdir sites
 $ cd sites 
 $ git clone https://github.com/RuslanGR1/accounts.git
@@ -19,3 +19,4 @@ $ python manage.py createsuperuser
 ...
 
 $ python manage.py runserver
+```
