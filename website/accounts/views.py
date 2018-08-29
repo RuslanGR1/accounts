@@ -54,7 +54,6 @@ def form_confirm(request, type_, code):
     order = get_object_or_404(Order, pk=request.session.get('id', None))
 
     if request.POST:
-        # TODO: Delete after, temp check
         if check_status(order):  # Проверка оплаты
             order.paid = True
             order.download_code = generator(size=20)
@@ -102,11 +101,11 @@ def txt_download(request, type_, d_link):
 
 
 # TODO: Удалить представление после отладки
-def add(request):
-    types = ['Bitcointalk', 'Gmail', 'vk', 'test']
-    for i in range(10):
-        a = Account(type=AccountType.objects.get(name=random.choice(types)),
-                    login=generator(size=8) + '@gmail.com',
-                    password=generator(size=12))
-        a.save()
-    return redirect(reverse('accounts:main', args=[]))
+# def add(request):
+#     types = ['Bitcointalk', 'Gmail', 'vk', 'test']
+#     for i in range(10):
+#         a = Account(type=AccountType.objects.get(name=random.choice(types)),
+#                     login=generator(size=8) + '@gmail.com',
+#                     password=generator(size=12))
+#         a.save()
+#     return redirect(reverse('accounts:main', args=[]))
