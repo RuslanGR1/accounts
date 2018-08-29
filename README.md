@@ -20,3 +20,11 @@ $ python manage.py createsuperuser
 
 $ python manage.py runserver
 ```
+
+### Settings update:
+> Add your qiwi phone number and qiwi api token (permission to view payment history)
+```
+base_num = ''
+
+token = ''
+```
