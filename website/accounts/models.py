@@ -4,10 +4,18 @@ from django.core.validators import MinValueValidator
 # Create your models here.
 
 
+class Group(models.Model):
+    title = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.title
+
+
 class AccountType(models.Model):
-    name = models.CharField('name of type', max_length=30)
-    description = models.CharField('description', max_length=200)
-    price = models.DecimalField(decimal_places=2, max_digits=7, default=0)
+    group = models.ForeignKey('Group', on_delete=models.CASCADE, null=True, blank=True, default=None)
+    name = models.CharField('Категория', max_length=30)
+    description = models.CharField('Описание', max_length=200)
+    price = models.DecimalField('За 1 шт.', decimal_places=2, max_digits=7, default=0)
 
     def get_short_description(self):
         if len(self.description) > 50:
