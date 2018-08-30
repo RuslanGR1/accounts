@@ -29,8 +29,8 @@ class AccountType(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Account type'
-        verbose_name_plural = 'Account types'
+        verbose_name = 'Категория аккаунта'
+        verbose_name_plural = 'Категории аккаунтов'
 
 
 class Order(models.Model):
