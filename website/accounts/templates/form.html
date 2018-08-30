@@ -5,12 +5,16 @@
 {% endblock %}
 
 {% block content %}
-    <p>{{ type }}</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Отправить" class="btn btn-primary">
-    </form>
+    <h3>{{ type }}</h3>
+    <div class="row">
+        <div class="col-md-4">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Отправить" class="btn btn-primary">
+        </form>
+        </div>
+    </div>
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -18,5 +22,4 @@
             {% endfor %}
         </ul>
     {% endif %}
-
 {% endblock %}

@@ -7,6 +7,11 @@
 {% block content %}
     {% if order %}
         <div class="col-md-6">
+            {% if order.coupon %}
+                <h5>Купон на скидку {{ order.coupon.discount }}%</h5>
+            {% else %}
+                <h5>Купон не использован</h5>
+            {% endif %}
             <table class="table">
                 <tbody>
                     <tr>
@@ -41,10 +46,10 @@
             {% endif %}
 
             {% if order.paid %}
-                <p>Good</p>
+                <p>Оплачено</p>
                 <a href="{% url 'accounts:txt_download' order.type.name order.download_code %}">Ссылка для скачивания.</a>
             {% else %}
-                <p>Not Good</p>
+                <p>Не оплачено</p>
             {% endif %}
 
             {% if messages %}

@@ -1,4 +1,3 @@
-import random
 import string
 
 from django.shortcuts import (
@@ -11,7 +10,7 @@ from django.contrib import messages
 from django.http import HttpResponse, Http404
 from django.db import transaction, IntegrityError
 
-from .models import AccountType, Order, Account, Group
+from .models import AccountType, Order, Account, Group, Coupon
 from .forms import OrderForm
 from .funcs import generator, CountException, check_status
 from website import settings
@@ -41,8 +40,15 @@ def base_form(request, type_):
             if data['count'] > AccountType.objects.get(name=type_).get_count():
                 raise CountException
 
+            try:
+                coupon = Coupon.objects.get(code=data['code'])
+            except Coupon.DoesNotExist:
+                coupon = None
+
             order = Order(email=data['email'],
+                          coupon=coupon,
                           count=data['count'],
+                          payment_method=data['payment_method'],
                           type=get_object_or_404(AccountType, name=type_))
 
             order.pay_comment = generator(size=8, chars=string.digits)
@@ -53,7 +59,8 @@ def base_form(request, type_):
         except CountException:
             messages.add_message(request, messages.INFO, 'Недостаточно аккаунтов.')
 
-    return render(request, 'form.html', {'type': type_, 'form': form})
+    return render(request, 'form.html', {'type': type_,
+                                         'form': form})
 
 
 def form_confirm(request, type_, code):

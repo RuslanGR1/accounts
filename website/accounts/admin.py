@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Account, AccountType, Order, Group
+from .models import Account, AccountType, Order, Group, Coupon
 
 
 class GroupAdmin(admin.ModelAdmin):
@@ -37,3 +37,4 @@ admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountType, AccountTypeAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Group, GroupAdmin)
+admin.site.register(Coupon)
