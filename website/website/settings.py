@@ -29,7 +29,7 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
-
+# Qiwi account phone number
 base_num = ''
 
 token = ''
