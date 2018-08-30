@@ -24,7 +24,7 @@ def main(request):
     s = namedtuple('Section', 'title accounts')
     groups_s = [s(g.title, AccountType.objects.filter(group=g)) for g in groups]
 
-    return render(request, 'main_1.html', {'groups': groups_s})
+    return render(request, 'main.html', {'groups': groups_s})
 
 
 def base_form(request, type_):
@@ -105,14 +105,3 @@ def txt_download(request, type_, d_link):
         return response
     else:
         raise Http404('Неверный адрес или недостаточно аккаунтов')
-
-
-# TODO: Удалить представление после отладки
-def add(request):
-    types = ['email']
-    for i in range(10):
-        a = Account(type=AccountType.objects.get(name=random.choice(types)),
-                    login=generator(size=8) + '@gmail.com',
-                    password=generator(size=12))
-        a.save()
-    return redirect(reverse('accounts:main', args=[]))
