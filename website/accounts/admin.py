@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Account, AccountType, Order
+from .models import Account, AccountType, Order, Group
+
+
+class GroupAdmin(admin.ModelAdmin):
+    pass
 
 
 class AInline(admin.TabularInline):
@@ -8,6 +12,7 @@ class AInline(admin.TabularInline):
 
 
 class AccountTypeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'group', 'price']
     inlines = [AInline]
 
     class Meta:
@@ -31,3 +36,4 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountType, AccountTypeAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(Group, GroupAdmin)

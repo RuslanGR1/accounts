@@ -30,9 +30,9 @@ ALLOWED_HOSTS = [
 ]
 
 
-base_num = ''
+base_num = '+79874229660'
 
-token = ''
+token = '907ebd900ebebf838783278ef70a3dd5'
 
 # Application definition
 

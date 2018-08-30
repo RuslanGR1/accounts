@@ -1,6 +1,5 @@
 import random
 import string
-from collections import namedtuple
 
 from django.shortcuts import (
     render,
@@ -16,6 +15,8 @@ from .models import AccountType, Order, Account, Group
 from .forms import OrderForm
 from .funcs import generator, CountException, check_status
 from website import settings
+
+from collections import namedtuple
 
 
 def main(request):
@@ -104,3 +105,14 @@ def txt_download(request, type_, d_link):
         return response
     else:
         raise Http404('Неверный адрес или недостаточно аккаунтов')
+
+
+# TODO: Удалить представление после отладки
+def add(request):
+    types = ['email']
+    for i in range(10):
+        a = Account(type=AccountType.objects.get(name=random.choice(types)),
+                    login=generator(size=8) + '@gmail.com',
+                    password=generator(size=12))
+        a.save()
+    return redirect(reverse('accounts:main', args=[]))

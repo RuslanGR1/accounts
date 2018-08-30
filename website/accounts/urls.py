@@ -25,3 +25,9 @@ urlpatterns = [
     url(r'^(?P<type_>[a-zA-Z-]+)/(?P<code>\w{25})/$', views.form_confirm, name='form_confirm'),
     url(r'^(?P<type_>[a-zA-Z-]+)/txt/(?P<d_link>\w{20})/$', views.txt_download, name='txt_download')
 ]
+
+from website.settings import DEBUG
+if DEBUG:
+    urlpatterns += [
+        url(r'add', views.add, name='add')
+    ]
