@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
 # Qiwi account phone number
 base_num = ''
 
+# Qiwi API token
 token = ''
 
 # Application definition
